@@ -33,8 +33,21 @@ This single script:
 3. Confirm only one copy exists: `/Applications/Valleytainment FCP AI.app`
 4. Re-register manually:
    ```bash
+   /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+     -f "/Applications/Valleytainment FCP AI.app"
    pluginkit -a "/Applications/Valleytainment FCP AI.app/Contents/PlugIns/FCPWorkflowExtension.appex"
    ```
+5. Confirm it is registered and matches Final Cut's extension point:
+   ```bash
+   pluginkit -mv -p com.apple.FinalCut.WorkflowExtension | grep valleytainment
+   ```
+
+## Verified on this build
+
+- dyld resolves `ProExtensionHost`/`ProExtension` from Final Cut Pro and `libFCPAIKit.dylib` from the app bundle with no missing symbols.
+- `pluginkit` registers `com.valleytainment.fcpai.workflow` and matches `com.apple.FinalCut.WorkflowExtension`.
+
+Note: this Mac has no Apple code-signing identity, so the bundle is ad-hoc signed. If Final Cut Pro refuses to load an ad-hoc extension on your macOS version, use the Xcode path below with your Apple Development team.
 
 ## Xcode path (recommended for production signing)
 

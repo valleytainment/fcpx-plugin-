@@ -38,7 +38,8 @@ xcrun swiftc -emit-module -emit-library \
   "$ROOT/Sources/FCPAIKit/"*.swift \
   -module-name FCPAIKit \
   -o "$BUILD/libFCPAIKit.dylib" \
-  -emit-module-path "$BUILD/FCPAIKit.swiftmodule"
+  -emit-module-path "$BUILD/FCPAIKit.swiftmodule" \
+  -Xlinker -install_name -Xlinker "@rpath/libFCPAIKit.dylib"
 
 SWIFT_COMMON=(
   -I "$BUILD"
@@ -54,6 +55,7 @@ xcrun swiftc -parse-as-library \
   -framework Cocoa -framework SwiftUI -framework CoreMedia \
   -framework ProExtensionHost -framework ProExtension \
   -Xlinker -rpath -Xlinker "@executable_path/../../../../Frameworks" \
+  -Xlinker -rpath -Xlinker "$FCP_FW" \
   -Xlinker -e -Xlinker _ProExtensionMain \
   -o "$DIST/FCPAIHost.app/Contents/PlugIns/FCPWorkflowExtension.appex/Contents/MacOS/FCPWorkflowExtension"
 
@@ -64,11 +66,6 @@ xcrun swiftc -parse-as-library \
   -framework SwiftUI -framework AppKit \
   -Xlinker -rpath -Xlinker "@executable_path/../Frameworks" \
   -o "$DIST/FCPAIHost.app/Contents/MacOS/FCPAIHost"
-
-install_name_tool -change libFCPAIKit.dylib @executable_path/../Frameworks/libFCPAIKit.dylib \
-  "$DIST/FCPAIHost.app/Contents/MacOS/FCPAIHost" 2>/dev/null || true
-install_name_tool -change libFCPAIKit.dylib @executable_path/../../../../Frameworks/libFCPAIKit.dylib \
-  "$DIST/FCPAIHost.app/Contents/PlugIns/FCPWorkflowExtension.appex/Contents/MacOS/FCPWorkflowExtension" 2>/dev/null || true
 
 mkdir -p "$DIST/FCPAIHost.app/Contents/Frameworks"
 cp "$BUILD/libFCPAIKit.dylib" "$DIST/FCPAIHost.app/Contents/Frameworks/"

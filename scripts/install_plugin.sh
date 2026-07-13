@@ -55,15 +55,28 @@ echo "==> [3/5] Building plugin"
 FCP_APP="$FCP_APP" bash "$ROOT/scripts/build_plugin.sh"
 
 echo "==> [4/5] Installing to $INSTALL_APP"
-sudo rm -rf "$INSTALL_APP" 2>/dev/null || rm -rf "$INSTALL_APP"
-cp -R "$ROOT/dist/FCPAIHost.app" "$INSTALL_APP"
+# Quit Final Cut Pro so it re-scans extensions on next launch.
+osascript -e 'tell application id "com.apple.FinalCut" to quit' 2>/dev/null || true
+sleep 2
 
 APPEX="$INSTALL_APP/Contents/PlugIns/FCPWorkflowExtension.appex"
+if [[ -d "$INSTALL_APP" ]] && command -v pluginkit >/dev/null 2>&1; then
+  pluginkit -r "$APPEX" 2>/dev/null || true
+fi
+rm -rf "$INSTALL_APP"
+cp -R "$ROOT/dist/FCPAIHost.app" "$INSTALL_APP"
+
+# LaunchServices registration is required before pluginkit can see the extension.
+LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+[[ -x "$LSREGISTER" ]] && "$LSREGISTER" -f "$INSTALL_APP" 2>/dev/null || true
 if command -v pluginkit >/dev/null 2>&1; then
   pluginkit -a "$APPEX" 2>/dev/null || true
 fi
 
-echo "==> [5/5] Launching Final Cut Pro"
+echo "==> [5/5] Launching host app, then Final Cut Pro"
+# Launching the host app once finalizes extension registration.
+open "$INSTALL_APP" 2>/dev/null || true
+sleep 2
 open -a "$FCP_APP" || open "$FCP_APP"
 
 cat <<MSG
