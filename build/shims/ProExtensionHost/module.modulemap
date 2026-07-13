@@ -1,0 +1,5 @@
+framework module ProExtensionHost {
+    umbrella header "ProExtensionHost.h"
+    export *
+    module * { export * }
+}

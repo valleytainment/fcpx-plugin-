@@ -1,6 +1,7 @@
 import Cocoa
 import CoreMedia
 import FCPAIKit
+import ProExtension
 import ProExtensionHost
 
 /// Phase 0 adapter: only Apple's public workflow-extension timeline surface.

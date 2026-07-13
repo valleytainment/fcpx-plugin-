@@ -9,6 +9,5 @@ struct FCPAIHostApp: App {
             HostView(viewModel: viewModel)
                 .frame(minWidth: 620, minHeight: 460)
         }
-        .windowResizability(.contentMinSize)
     }
 }

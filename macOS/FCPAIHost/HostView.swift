@@ -17,7 +17,6 @@ struct HostView: View {
                     TextField("Ollama URL", text: $viewModel.baseURLText)
                     TextField("Model", text: $viewModel.model)
                 }
-                .formStyle(.grouped)
             }
 
             HStack {

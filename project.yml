@@ -1,0 +1,67 @@
+name: ValleytainmentFCPAI
+options:
+  bundleIdPrefix: com.valleytainment.fcpai
+  deploymentTarget:
+    macOS: "13.0"
+  createIntermediateGroups: true
+
+packages:
+  FCPAIKit:
+    path: .
+    product: FCPAIKit
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  FCPAIHost:
+    type: application
+    platform: macOS
+    sources:
+      - path: macOS/FCPAIHost
+    dependencies:
+      - package: FCPAIKit
+        product: FCPAIKit
+      - target: FCPWorkflowExtension
+        embed: true
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.valleytainment.fcpai.host
+      INFOPLIST_FILE: macOS/FCPAIHost/Info.plist
+      CODE_SIGN_ENTITLEMENTS: macOS/FCPAIHost/FCPAIHost.entitlements
+      GENERATE_INFOPLIST_FILE: NO
+
+  FCPWorkflowExtension:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: macOS/FCPWorkflowExtension
+    dependencies:
+      - package: FCPAIKit
+        product: FCPAIKit
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.valleytainment.fcpai.workflow
+      INFOPLIST_FILE: macOS/FCPWorkflowExtension/Info.plist
+      CODE_SIGN_ENTITLEMENTS: macOS/FCPWorkflowExtension/FCPWorkflowExtension.entitlements
+      GENERATE_INFOPLIST_FILE: NO
+      OTHER_LDFLAGS:
+        - "-e"
+        - "_ProExtensionMain"
+      FRAMEWORK_SEARCH_PATHS:
+        - "$(inherited)"
+        - "/Applications/Final Cut Pro.app/Contents/Frameworks"
+      LD_RUNPATH_SEARCH_PATHS:
+        - "$(inherited)"
+        - "@executable_path/../Frameworks"
+        - "@executable_path/../../../../Frameworks"
+
+schemes:
+  FCPAIHost:
+    build:
+      targets:
+        FCPAIHost: all
+    run:
+      config: Debug

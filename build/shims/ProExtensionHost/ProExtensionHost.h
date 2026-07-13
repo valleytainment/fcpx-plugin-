@@ -1,0 +1,5 @@
+#import "FCPXHost.h"
+#import "FCPXObject.h"
+#import "FCPXSequence.h"
+#import "FCPXTimeline.h"
+#import "ProExtensionHostBase.h"

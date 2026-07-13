@@ -13,6 +13,17 @@ A local-first AI operator foundation for **Final Cut Pro 10.6.5** using:
 
 > Phase 0 deliberately does **not** pretend that Apple's public workflow-extension API can blade, trim, duplicate, or export arbitrary projects. The included extension uses the official timeline surface for timeline state and playhead movement. Deep editing is the next adapter layer.
 
+## Quick install (one command)
+
+```bash
+chmod +x scripts/*.sh
+./scripts/install_plugin.sh
+```
+
+Then in Final Cut Pro: **Window → Extensions → FCP AI Operator**.
+
+See `docs/ONE_COMMAND_SETUP.md` for details and troubleshooting.
+
 ## Repository map
 
 ```text

@@ -27,15 +27,16 @@ final class ExtensionViewModel: ObservableObject {
 
     func runAgent() {
         guard !prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-        guard let baseURL = URL(string: UserDefaults.standard.string(forKey: "baseURL") ?? "http://127.0.0.1:11434") else {
-            response = "Invalid Ollama URL in the companion app settings."
+        let runtime = SharedRuntimeConfig.load()
+        guard let baseURL = URL(string: runtime.ollamaBaseURL) else {
+            response = "Invalid Ollama URL in shared runtime config."
             return
         }
 
         isRunning = true
         status = "Qwen is planning…"
         response = ""
-        let model = UserDefaults.standard.string(forKey: "model") ?? "qwen3:4b-instruct-2507-q4_K_M"
+        let model = runtime.model
         let client = OllamaClient(baseURL: baseURL, model: model)
         let publicTools = FCPToolCatalog.definitions(named: [
             "fcp.get_timeline_state",

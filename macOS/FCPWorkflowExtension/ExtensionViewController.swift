@@ -1,5 +1,6 @@
 import Cocoa
 import SwiftUI
+import ProExtension
 import ProExtensionHost
 
 final class ExtensionViewController: NSViewController {

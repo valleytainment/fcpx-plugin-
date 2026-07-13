@@ -1,0 +1,4 @@
+framework module ProExtension {
+    umbrella header "ProExtension.h"
+    export *
+}
