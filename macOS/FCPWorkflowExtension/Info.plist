@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDisplayName</key>
+    <string>FCP AI Operator</string>
+    <key>NSAppleEventsUsageDescription</key>
+    <string>FCP AI Operator uses approved automation to carry out editing commands in Final Cut Pro.</string>
+    <key>NSExtension</key>
+    <dict>
+        <key>NSExtensionPointIdentifier</key>
+        <string>com.apple.FinalCut.WorkflowExtension</string>
+        <key>ProExtensionPrincipalViewControllerClass</key>
+        <string>$(PRODUCT_MODULE_NAME).ExtensionViewController</string>
+        <key>NSExtensionAttributes</key>
+        <dict>
+            <key>ProExtensionMinWidth</key>
+            <integer>420</integer>
+            <key>ProExtensionMinHeight</key>
+            <integer>560</integer>
+        </dict>
+    </dict>
+</dict>
+</plist>

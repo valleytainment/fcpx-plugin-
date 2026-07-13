@@ -1,0 +1,23 @@
+Valleytainment FCP AI Operator — Phase 0 Validation
+Date: 2026-07-12 (America/New_York)
+
+Validated in container:
+- Swift 6.2.1 package build: PASS
+- XCTest suite: PASS
+- Tests executed: 5
+- Failures: 0
+- CLI build/help smoke test: PASS
+- config/default.json parse: PASS
+- Host Info.plist parse: PASS
+- Host entitlements parse: PASS
+- Workflow Extension Info.plist parse: PASS
+- Workflow Extension entitlements parse: PASS
+
+Not validated in container:
+- macOS Cocoa/SwiftUI host target link
+- Apple ProExtensionHost Workflow Extension target link
+- Final Cut Pro 10.6.5 runtime integration
+- Ollama model inference (Ollama is not installed in this container)
+
+Those checks require the destination Mac, Xcode, Apple's Workflow Extension SDK,
+Final Cut Pro 10.6.5, and the local Qwen model.

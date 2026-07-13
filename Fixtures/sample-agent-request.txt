@@ -1,0 +1,1 @@
+Inspect the active timeline. If execution is authorized, move the playhead to frame 240. Then re-read the timeline and report whether the playhead reached frame 240. Do not claim success without a successful tool result.
